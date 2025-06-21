@@ -1,11 +1,3 @@
-## Features
-
-- Scrollable video feed.
-- Interactive quizzes on video content.
-- User profile with customizable interests.
-- XP and leveling system.
-- Play/pause video on click.
-- Local video previews on the homepage.
 
 ## Getting Started
 
