@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { ReelContent, Interest, QuizQuestion, UserQuizProgress, UserXPLevel } from '../../types';
 import { getMockReels } from '../../services/mockDataService';
 import { 
-  getUserPreferences, 
   getUserQuizProgress, 
   markQuizAttempt,
   getUserXPLevel, 
@@ -201,25 +200,17 @@ const ReelsPage: React.FC = () => {
   }, []);
 
   const refreshReelsListFromSource = useCallback(() => {
-    const preferences = getUserPreferences();
-    const interests = new Set(preferences?.interests || []);
-    let personalizedReels = allFetchedReels;
-
-    if (interests.size > 0) {
-      personalizedReels = allFetchedReels.filter(reel =>
-        reel.tags && reel.tags.some(tag => interests.has(tag))
-      );
-    }
+    const shuffledReels = [...allFetchedReels].sort(() => Math.random() - 0.5);
     
     const currentProgressData = getUserQuizProgress(); 
     const masteredReelIds = Object.keys(currentProgressData).filter(reelId => 
         currentProgressData[reelId]?.correctlyAnswered
     );
 
-    const unmasteredReels = personalizedReels.filter(reel => 
+    const unmasteredReels = shuffledReels.filter(reel => 
         !reel.quiz || !masteredReelIds.includes(reel.id)
     );
-    // console.log("LOG: refreshReelsListFromSource - Generated unmasteredReels IDs:", unmasteredReels.map(r => r.id));
+
     return unmasteredReels;
   }, [allFetchedReels]);
 
@@ -302,15 +293,7 @@ const ReelsPage: React.FC = () => {
     }
 
     if (finalQueueCandidate.length === 0 && !isLoading) {
-      const preferences = getUserPreferences();
-      const interests = new Set(preferences?.interests || []);
-      if (interests.size > 0) {
-        setStatusMessage('You\'ve mastered all quizzes for your interests or no matching content! 🎉');
-      } else if (preferences?.name) {
-         setStatusMessage('Please select interests in your profile to see personalized reels.');
-      } else {
-        setStatusMessage('Complete onboarding to get personalized reels!');
-      }
+      setStatusMessage('You\'ve seen all available reels! 🎉');
     } else if (finalQueueCandidate.length > 0) {
       setStatusMessage('');
     }
@@ -427,7 +410,7 @@ const ReelsPage: React.FC = () => {
 
   let contentToRender;
   if (displayedReels.length === 0) {
-      contentToRender = <div className="flex-grow bg-[#181818] flex items-center justify-center text-slate-100 p-4 text-center">{statusMessage || 'No reels available. Update your interests or check back later!'}</div>;
+      contentToRender = <div className="flex-grow bg-[#181818] flex items-center justify-center text-slate-100 p-4 text-center">{statusMessage || 'No reels available. Check back later!'}</div>;
   } else {
       const safeCurrentReelIndex = currentReelIndex % displayedReels.length;
       const currentReel = displayedReels[safeCurrentReelIndex];
