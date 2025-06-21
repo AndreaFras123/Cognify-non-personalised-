@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cognify</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+      body {
+        margin: 0;
+        font-family: sans-serif; /* Default fallback font */
+        background-color: #111; /* Darker background for the page */
+        display: flex;
+        justify-content: center; /* Horizontally center the device frame */
+        align-items: center;     /* Vertically center the device frame */
+        min-height: 100vh;       /* Ensure body takes full viewport height */
+        padding: 1rem;           /* Add some padding around the frame */
+        box-sizing: border-box;  /* Padding included in width/height calculations */
+      }
+      #device-frame {
+        /* Sizing & Aspect Ratio: Simulates the device screen */
+        width: 100%;               /* Allows the frame to shrink on smaller viewports */
+        max-width: 1320px;         /* Crucial: Prevents frame from exceeding 1320px width, avoids stretching */
+        aspect-ratio: 1320 / 2868; /* Maintains the fixed 1320x2868 aspect ratio */
+
+        /* Visuals */
+        background-color: #181818; /* App's main background color */
+        border: 3px solid #333;
+        border-radius: 20px;
+        box-shadow: 0 0 30px rgba(0,0,0,0.6);
+
+        /* Behavior for containing content */
+        overflow: hidden;          /* Ensures content scrolls *within* this frame; frame itself doesn't grow or show scrollbars */
+        display: flex;             /* Allows #root to fill this frame correctly */
+        position: relative;        /* For potential future use with absolutely positioned child elements */
+      }
+      #root {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        /* Internal application content (pages) will handle their own scrolling as needed (e.g., overflow-y: auto) */
+      }
+
+      /* Custom Poppins font classes */
+      .font-poppins-regular {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 400;
+      }
+      .font-poppins-medium {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+      }
+      .font-poppins-semibold {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.1.0/",
+    "react": "https://esm.sh/react@^19.1.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.1.0/",
+    "react-router-dom": "https://esm.sh/react-router-dom@^7.6.2"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="device-frame">
+      <div id="root"></div>
+    </div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,5 @@
+{
+  "name": "Cognify",
+  "description": "A mobile application for discovering personalized educational content through reels, and journaling learnings. Navigate through home, reels, and journal sections.",
+  "requestFramePermissions": []
+}
